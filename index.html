@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إبداع رقمي | دليل أدوات الذكاء الاصطناعي المجانية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0A0F1E; --accent1: #00D4FF; --accent2: #7B2FFF; --accent3: #FF6B35;
+    --gold: #FFD700; --text: #E8EEFF; --text-muted: #8892B0;
+    --card-bg: rgba(13,27,62,0.7); --border: rgba(0,212,255,0.2);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Cairo',sans-serif; background:var(--primary); color:var(--text); min-height:100vh; overflow-x:hidden; }
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background: radial-gradient(ellipse 80% 50% at 20% 10%, rgba(123,47,255,.15) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,212,255,.12) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 60% at 50% 50%, rgba(255,107,53,.05) 0%, transparent 70%);
+  }
+  .grid-lines { position:fixed; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px); background-size:60px 60px; }
+  .stars { position:fixed; inset:0; z-index:0; pointer-events:none; }
+  .star { position:absolute; background:white; border-radius:50%; animation:twinkle var(--d) ease-in-out infinite alternate; }
+  @keyframes twinkle { from{opacity:.1;transform:scale(.8)} to{opacity:.8;transform:scale(1.2)} }
+  header { position:relative; z-index:10; background:rgba(10,15,30,.97); border-bottom:1px solid var(--border); backdrop-filter:blur(20px); }
+  .top-bar { background:linear-gradient(90deg,var(--accent2),var(--accent1),var(--accent3)); text-align:center; padding:7px; font-size:.75rem; font-weight:700; color:white; }
+  .header-main { display:flex; align-items:center; justify-content:space-between; padding:14px 28px; gap:16px; flex-wrap:wrap; }
+  .logo-section { display:flex; align-items:center; gap:12px; }
+  .logo-img { width:64px; height:64px; border-radius:50%; object-fit:cover; box-shadow:0 0 20px rgba(0,212,255,.35); border:2px solid rgba(0,212,255,.3); }
+  .logo-text h1 { font-family:'Tajawal',sans-serif; font-size:1.65rem; font-weight:800; background:linear-gradient(90deg,var(--accent1),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1.1; }
+  .logo-text p { font-size:.67rem; color:var(--text-muted); margin-top:2px; }
+  .gov-logos { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .gov-logo-item { display:flex; flex-direction:column; align-items:center; gap:5px; }
+  .gov-logo-item img { height:54px; width:54px; object-fit:contain; border-radius:50%; filter:drop-shadow(0 2px 6px rgba(255,215,0,.25)); }
+  .gov-logo-item span { font-size:.58rem; color:var(--gold); font-weight:700; text-align:center; max-width:72px; line-height:1.3; }
+  .hero { position:relative; z-index:5; text-align:center; padding:60px 20px 36px; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:600px; background:radial-gradient(circle,rgba(0,212,255,.08) 0%,transparent 70%); pointer-events:none; }
+  .hero-eyebrow { display:inline-block; background:rgba(0,212,255,.1); border:1px solid rgba(0,212,255,.3); color:var(--accent1); padding:6px 20px; border-radius:30px; font-size:.8rem; font-weight:600; margin-bottom:18px; animation:fadeInDown .8s ease; }
+  .hero h2 { font-family:'Tajawal',sans-serif; font-size:clamp(1.8rem,4.5vw,3.2rem); font-weight:800; line-height:1.2; margin-bottom:12px; animation:fadeInUp .8s ease .1s both; }
+  .hero h2 span { background:linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .hero p { color:var(--text-muted); font-size:1rem; max-width:600px; margin:0 auto 28px; line-height:1.7; animation:fadeInUp .8s ease .2s both; }
+  .stats-bar { display:flex; justify-content:center; gap:50px; padding:22px 20px; background:rgba(13,27,62,.5); border-top:1px solid var(--border); border-bottom:1px solid var(--border); position:relative; z-index:5; flex-wrap:wrap; }
+  .stat-item { text-align:center; }
+  .stat-number { font-family:'Tajawal',sans-serif; font-size:2.3rem; font-weight:800; background:linear-gradient(90deg,var(--accent1),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; }
+  .stat-label { font-size:.78rem; color:var(--text-muted); margin-top:4px; }
+  .filter-section { position:relative; z-index:5; padding:34px 20px 14px; text-align:center; }
+  .filter-label { font-size:.82rem; color:var(--text-muted); margin-bottom:13px; }
+  .filter-tabs { display:flex; justify-content:center; flex-wrap:wrap; gap:8px; }
+  .filter-tab { padding:9px 17px; border-radius:50px; border:1px solid var(--border); background:transparent; color:var(--text-muted); cursor:pointer; font-family:'Cairo',sans-serif; font-size:.8rem; font-weight:600; transition:all .3s ease; display:flex; align-items:center; gap:7px; }
+  .filter-tab:hover { border-color:var(--accent1); color:var(--accent1); background:rgba(0,212,255,.05); }
+  .filter-tab.active { background:linear-gradient(135deg,var(--accent2),var(--accent1)); border-color:transparent; color:white; box-shadow:0 4px 20px rgba(0,212,255,.3); }
+  .filter-tab .tab-count { background:rgba(255,255,255,.2); border-radius:10px; padding:1px 6px; font-size:.67rem; }
+  .search-wrap { max-width:480px; margin:16px auto 0; position:relative; }
+  .search-wrap input { width:100%; padding:12px 46px 12px 18px; border-radius:50px; border:1px solid var(--border); background:rgba(13,27,62,.6); color:var(--text); font-family:'Cairo',sans-serif; font-size:.88rem; outline:none; transition:border-color .3s; }
+  .search-wrap input:focus { border-color:var(--accent1); box-shadow:0 0 20px rgba(0,212,255,.1); }
+  .search-icon { position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:1rem; }
+  .main-content { position:relative; z-index:5; max-width:1400px; margin:0 auto; padding:34px 20px 70px; }
+  .category-section { margin-bottom:52px; }
+  .category-header { display:flex; align-items:center; gap:13px; margin-bottom:22px; flex-wrap:wrap; }
+  .category-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .cat-writing .category-icon      { background:linear-gradient(135deg,#7B2FFF,#00D4FF); }
+  .cat-images .category-icon       { background:linear-gradient(135deg,#FF6B35,#FF2D7B); }
+  .cat-video .category-icon        { background:linear-gradient(135deg,#FF2D7B,#7B2FFF); }
+  .cat-presentation .category-icon { background:linear-gradient(135deg,#00D4FF,#00FF88); }
+  .cat-audio .category-icon        { background:linear-gradient(135deg,#FFD700,#FF6B35); }
+  .category-title { font-family:'Tajawal',sans-serif; font-size:1.35rem; font-weight:700; }
+  .cat-sub { font-size:.76rem; color:var(--text-muted); }
+  .category-count { background:rgba(0,212,255,.1); border:1px solid rgba(0,212,255,.2); color:var(--accent1); padding:3px 11px; border-radius:20px; font-size:.76rem; font-weight:600; margin-right:auto; }
+  .divider { height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin:6px 0 24px; }
+  .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:14px; }
+  .tool-card { background:var(--card-bg); border:1px solid var(--border); border-radius:16px; padding:20px 14px 28px; cursor:pointer; transition:all .3s cubic-bezier(.4,0,.2,1); text-align:center; text-decoration:none; display:flex; flex-direction:column; align-items:center; gap:7px; position:relative; overflow:hidden; backdrop-filter:blur(10px); animation:fadeIn .5s ease both; }
+  .tool-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(0,212,255,.05),rgba(123,47,255,.05)); opacity:0; transition:opacity .3s; }
+  .tool-card:hover { transform:translateY(-5px); border-color:var(--accent1); box-shadow:0 12px 38px rgba(0,212,255,.2); }
+  .tool-card:hover::before { opacity:1; }
+  .tool-card:hover .tool-arrow { opacity:1; }
+  .tool-logo { width:52px; height:52px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:700; color:white; flex-shrink:0; }
+  .tool-name { font-size:.88rem; font-weight:700; color:var(--text); }
+  .tool-tag { font-size:.62rem; color:var(--accent1); background:rgba(0,212,255,.08); border:1px solid rgba(0,212,255,.15); padding:2px 8px; border-radius:10px; font-weight:600; }
+  .tool-desc { font-size:.66rem; color:var(--text-muted); line-height:1.45; text-align:center; padding:0 4px; }
+  .tool-arrow { font-size:.68rem; color:var(--accent1); opacity:0; transition:all .3s; position:absolute; bottom:8px; left:50%; transform:translateX(-50%); white-space:nowrap; }
+  .tool-card.hidden { display:none; }
+  .no-results { text-align:center; padding:60px; color:var(--text-muted); display:none; }
+  footer { position:relative; z-index:5; background:rgba(10,15,30,.98); border-top:1px solid var(--border); padding:34px 20px; text-align:center; }
+  .footer-logos { display:flex; justify-content:center; align-items:center; gap:24px; margin-bottom:18px; flex-wrap:wrap; }
+  .footer-logo-item { display:flex; flex-direction:column; align-items:center; gap:7px; }
+  .footer-logo-item img { height:58px; width:58px; object-fit:contain; border-radius:50%; filter:drop-shadow(0 2px 8px rgba(255,215,0,.3)); }
+  .footer-logo-item span { font-size:.63rem; color:var(--gold); font-weight:700; text-align:center; max-width:80px; line-height:1.3; }
+  footer p { color:var(--text-muted); font-size:.74rem; line-height:1.6; margin-top:10px; }
+  @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeInUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn     { from{opacity:0;transform:scale(.95)} to{opacity:1;transform:scale(1)} }
+  @media(max-width:768px) {
+    .header-main { padding:11px 14px; } .hero { padding:38px 14px 22px; } .stats-bar { gap:22px; }
+    .tools-grid { grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; }
+    .gov-logos { gap:10px; } .gov-logo-item img { height:40px; width:40px; }
+  }
+  @media(max-width:480px) {
+    .tools-grid { grid-template-columns:repeat(2,1fr); } .logo-text h1 { font-size:1.15rem; } .gov-logos { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-lines"></div>
+<div class="stars" id="stars"></div>
+<header>
+  <div class="top-bar">🚀 &nbsp; البرنامج القومي لتنمية أبناء الصعيد والمحافظات الحدودية &nbsp;|&nbsp; وزارة الشباب والرياضة &nbsp;|&nbsp; تحت رعاية رئاسة مجلس الوزراء &nbsp; 🚀</div>
+  <div class="header-main">
+    <div class="logo-section">
+      <img class="logo-img" src="data:image/webp;base64,UklGRjwCAABXRUJQVlA4IDACAADwDACdASpQAFAAPu1mrVIppSknqPbbGTAdiWIAyySqSzXj7aPntdMl3oL/VMFZaDLT0qbP5ta7tVs50e+COxnHXZUkzCevoLfdcdWEJy5ta52U0RSb+BeowGgBbtnwhv1ZXORIfxJO9WgcR0dZNFrAAP7xYL9sWyy7TuqlTtL5QLbbzWaZKVrPeEZ600vEJTU7kEUhURTcrybfVXYIKgDy7gadTO7DZ2v/tuIAA7lhFp2B9Q8aYd9rBOW3iIBis1c11/gipSsoPBNot2m4geMfHYXpNpPZiMNUtsidr2M0QZX53MO32AlPWGVth1vfCTZsGq2yg/ryN7DIRCqT9+wkK+D+Rxx789R3fvU1lPssKpzdU0ReOuwRVJefJ43itQn0PLz9qjJGiYfaS5hBFjHdzIKI2BWY5wR1McsU3F7Ud7Ru5SEFa018AwzCS7e1p8RalRlcY/SiR0eVcyokLf+f6YlUIqg0Lg+zHQBhdH+mdEtRGPZEPzPIGM06d0o5TKjd9sOu94SdFPUJK/vvlBcbTjejQCAHpbwlO42W6ZfeWg9auwtslapOOf1XICgKHadD8GpEOHU39FbARlx8ppILZgi12N/kyY0d4A06/9XpShlCsvH+tbHj6KL/iqNURPKb+nOivIcawfSmHXiEEzZyDEl30fQIlCG/qkZGadVSwnNZuRVVfmgeYR9BPybAH0/BHLUeTZbjpf+TqXVxFNmCiHg4oFkuJGt3BGvt9FBgAA==" alt="إبداع رقمي">
+      <div class="logo-text"><h1>إبداع رقمي</h1><p>مبادرة تشجيع الشباب على استخدام الذكاء الاصطناعي</p></div>
+    </div>
+    <div class="gov-logos">
+      <div class="gov-logo-item"><img src="data:image/webp;base64,UklGRjwCAABXRUJQVlA4IDACAADwDACdASpQAFAAPu1mrVIppSknqPbbGTAdiWIAyySqSzXj7aPntdMl3oL/VMFZaDLT0qbP5ta7tVs50e+COxnHXZUkzCevoLfdcdWEJy5ta52U0RSb+BeowGgBbtnwhv1ZXORIfxJO9WgcR0dZNFrAAP7xYL9sWyy7TuqlTtL5QLbbzWaZKVrPeEZ600vEJTU7kEUhURTcrybfVXYIKgDy7gadTO7DZ2v/tuIAA7lhFp2B9Q8aYd9rBOW3iIBis1c11/gipSsoPBNot2m4geMfHYXpNpPZiMNUtsidr2M0QZX53MO32AlPWGVth1vfCTZsGq2yg/ryN7DIRCqT9+wkK+D+Rxx789R3fvU1lPssKpzdU0ReOuwRVJefJ43itQn0PLz9qjJGiYfaS5hBFjHdzIKI2BWY5wR1McsU3F7Ud7Ru5SEFa018AwzCS7e1p8RalRlcY/SiR0eVcyokLf+f6YlUIqg0Lg+zHQBhdH+mdEtRGPZEPzPIGM06d0o5TKjd9sOu94SdFPUJK/vvlBcbTjejQCAHpbwlO42W6ZfeWg9auwtslapOOf1XICgKHadD8GpEOHU39FbARlx8ppILZgi12N/kyY0d4A06/9XpShlCsvH+tbHj6KL/iqNURPKb+nOivIcawfSmHXiEEzZyDEl30fQIlCG/qkZGadVSwnNZuRVVfmgeYR9BPybAH0/BHLUeTZbjpf+TqXVxFNmCiHg4oFkuJGt3BGvt9FBgAA==" alt="إبداع رقمي"><span>إبداع رقمي</span></div>
+      <div class="gov-logo-item"><img src="data:image/webp;base64,UklGRsQFAABXRUJQVlA4ILgFAADQGQCdASpQAFAAPu1gp02ppaOiMzZrMTAdiWgAyl2pPT7SXot24nPM+jD/i78VvPn+or+nG/0QhY8vmSY52cBWXGo0qdmh+Pf6739/7mex61u1z6n7ud//3BG/n2Bgh68CcubapTYuSBMQ6zRwLSm51qIC9o6+tPWuU6xE6vw6eYTt4PnTheoGMnUxaP2othxG2DbtlDW6UQVJErfu5YTIutn9mZlXkYYzJRwpkVYim+1lVVfAu0jDmW3Nx7jL499ybvShxjrJ6l/Aoz4jkitm0K9fuN5/AAD+/obwfgE6ghg6M/P/pe+0KZOl626bOrpCrF2f5pQ4V0rMoPKU66mFxeF5B9QV9h1A3GpjkrNp1Ej9YwdwebSc9VdhANrXoElzXcQmWR80VVFHMjz3mmq/gFiE+C9WQ+0hJ0PqIhTYkl8m8+lPJjkqKjw6ZAMHD/nMsELUFTxhqyOGLYe1QOwsYkN+Wk9sbHZx/uY5LtQSg6Wv8BECKwdyampGuhR1T4elltFpm6gbBe19OV7mdPLe1kZ5ESe+z79fPU8FOdCCQpEOFbTNpC32QV/yzRxpItC9eLjcKTBxWS9TlvnbusK4JJY3Dkt6aR8Tbr6s0QK02bHxUMfmC3XXTC7m+2HiNjd4PQCLlKRxodV0yl29AbhozxNhld3R+MNo4WO335iQTyY+K7GPePyiFEouZhpBGt8SG6FK56TFiOqoGH5Xc6vAs4KKRmlc7CouIffXEiNW8yxbfsXJzuyqRQS8uZt17VYJGtwc2BGuXTbMVINbeTyf9I852f0jP8DzIk5lJ8UdCZVE+ySjpkucQov2ZY2RJXiztDqS9MHQUi70Zduzm9kFSgEnGcCWaTimK0OOSjcDRnzxFs+AxfuIwZpQw5AAxu1P3/ZGzDFidGTpKffIHlcj2RZxqt+dxKLk/xWyWlAVZZ0wHDdLjW9r1ds/2IT+b7hhjHSVdU+7AhR9URbCZejyPEPG3MT2UsDZoc+pZNxKAnFxlF5sDqSQRUwHtxlkqBR6k+SRQ0YNhfzcQMICfHd73xsStwWbbbFFDT8+CyfAxr7Etks+Ht7N8VglmzFJaoEWx/GSDv5PJ2STP+YtI5UGDdhgqmYkfjehd4IeKlOOHKIJqKjQv7MwjcV7KYC9VecBVb2SUT9KwLKTFP5GmsB8u55OAYJHsdavZpwB8XjXwv+8HBejw7kPvLpPzH0TQTXUvxVhcsk0o4VGvcRUqjVWHmw/rucqnuhoJAm/0Poj5lDO7aIHsCBusNIG3gV7cBTADOiWDQRvNvpTb/I+wIHP29HogU9d2IYF+sFCl4BrBmZlTDpGymOTn+p5zYipvu9zu3GTo9oI40epYjEgUvu00jt6gJsX/AWKIGF1yT+aJdW6qs99Q/gBp0sPFri+tj6/ZT15cEDrEzFaXBi870XCdJRbJduQ3Vq3A25TcKwsuOsFoSdBdGUCoONFf8m1rhDiCrJLsCeQThXOVnlm60Zx3KbZTFZ649DuCKq7G5EtiH6RDNzuwtrBUTl4IVoMAvDnIl//3955PoXzJYgeA7oqn90NloM7ulZGGizQG5fKHXrJTratWpTChTF5UaM0nUPAWGH8KgR7Dj4lHLFvyRCamVwEPuE3UIubVXAjiqYHANRa+sZsCWelk28ROngp2T57AkzS07hMq4duGoUljykJccrOzHXC6NY1VS0jHKmMGtWSmmWqXhn4pS1QChBAXy+UmOaG/J8Y5xEinm6aBixgoW9bMmM1BWQED1IeQCacLj1ChPQQD1+RqhIEQkrIJ1DnFeUxBEMITqjvNYkQ6lR0GjLst7+uk0DSLNx8/Di5BepeVK2koUE3TZmbH036MtCjXiicL4aET1F/JN5NAudD5EhC6e2dsPhKOQ75OiNmlo1lh376VGW7ckxjtWjJ+gFEXi0mv5eKwpeGesBCbD/YVKAXYxO8AAA=" alt="البرنامج القومي"><span>البرنامج القومي للصعيد والمحافظات الحدودية</span></div>
+      <div class="gov-logo-item"><img src="data:image/webp;base64,UklGRmYDAABXRUJQVlA4IFoDAAAQEACdASpQAFAAPu1ysFMppqQipnzIaTAdiWUAU9939TrCBMw6suDfVUA0fyOVA8dTfiz/Q7xqxWZTDn0ipkkziqK/9XfIxPgmcXYrfEPlGn9Eof0Eop8AKHpaA/cbc6DSVgUu897HKaTVpTAXqgOoPRNeragErnLCiM2GmmpTEGCp7qYpV2QfAAD++2tllNvSx2+WwoI5Qah7Os62Ergne3yatm6IDYHnp2Kf1FWXjkd2Ec/msR1g13UfTya3qkJTzz4v65b2JDt8HFE4e5sHLvGRksp2lCQ6DVv52xvhmqmAdAIp6rSVpDRcgeHZ/f5rF7lmvTujU29BA74oTdFZM6A4ppjVqIuddTsLi4nG6VHAmMIlAx0w1G+RoSHoub/XJpfRjUeK8OGOQLwpJNKisIibn7FEcZBZuO1rifuh2gTzyH1G3eyYWDfnoiJGCBnWD2hOMSBQ18yK1UpPSGZQRbxY1c6mtqvn6pvYW3OrTsbkNY3gVIcIw3CR8OcWRAF9gBQZqUAaFpKV52RigvgV4p55FE7fyuoGGHeF6rMDteYqUllbHotkU+dex/u4/ljMYuoSmCDGNMo0D/4HrtJk4P0qB807srP1viG8D/HA2FiDKrt8dZK1Yi2FCvAkYDVAC/H3CowF/tBGbzDPgoMwF44403jqlpHqd5sRCiqWhTCOjYw/vw7/gz2tGv09zXFt4TjGSYFi0GlMa8Ed/TltI/NlrXcpiDBiUPXlyku0U5KuKC8vlv+xdE+YcLzipcsV2csBwiPQ8kTEtlOPo7g0cYRYB6CZpF3cWzfxgfpfP2ZC46fQRTHQ4plDqP9zk4mZ1Ax+yh7Go5KzmHMDDUyel1z0HZ6dkB4usksEeKc9LfjUF9FVtDtsycmzy6SA4W2uk1E6qenZByVE/hU1w4u0Mmk5NHclqZiFni+J/S5ALYWlUq9/TocOhzLpUX21M+h7TVazymg/3ZhF2Z5cjUqyS3chgiTs/tfr1pHlowX9TfKlzPhUJePvKtajpNxXJiNMb98gfSaQtVfaxfs5SiboRD+lnm2TmH4/EsVboOr5WCgbdeSZ1jPw1vA7104+xuwufPoehlWjTRNLxKpom4dwfcl6tSixZHUcqhsrQyijzJPbXFH7HwAAAAA=" alt="وزارة الشباب والرياضة"><span>وزارة الشباب والرياضة</span></div>
+      <div class="gov-logo-item"><img src="data:image/webp;base64,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" alt="رئاسة مجلس الوزراء"><span>رئاسة مجلس الوزراء</span></div>
+    </div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-eyebrow">✨ أدوات الذكاء الاصطناعي المجانية</div>
+  <h2>دليلك الشامل لأفضل<br><span>أدوات الذكاء الاصطناعي</span></h2>
+  <p>اكتشف أقوى الأدوات المجانية لإنشاء الصور والفيديوهات والعروض التقديمية وكتابة المحتوى وتوليد الصوت والموسيقى — كل شيء في مكان واحد</p>
+</section>
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-number" id="totalTools">0</div><div class="stat-label">أداة ذكاء اصطناعي</div></div>
+  <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">فئات رئيسية</div></div>
+  <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">مجانية</div></div>
+  <div class="stat-item"><div class="stat-number">∞</div><div class="stat-label">إمكانيات إبداعية</div></div>
+</div>
+<div class="filter-section">
+  <p class="filter-label">🎯 اختر الفئة التي تريد استعراضها</p>
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="filterTools('all',this)">🌟 جميع الأدوات <span class="tab-count" id="count-all">0</span></button>
+    <button class="filter-tab" onclick="filterTools('writing',this)">✍️ كتابة المحتوى والدردشة <span class="tab-count" id="count-writing">0</span></button>
+    <button class="filter-tab" onclick="filterTools('images',this)">🎨 توليد الصور <span class="tab-count" id="count-images">0</span></button>
+    <button class="filter-tab" onclick="filterTools('video',this)">🎬 إنشاء الفيديو <span class="tab-count" id="count-video">0</span></button>
+    <button class="filter-tab" onclick="filterTools('presentation',this)">📊 العروض التقديمية <span class="tab-count" id="count-presentation">0</span></button>
+    <button class="filter-tab" onclick="filterTools('audio',this)">🎵 الصوت والموسيقى <span class="tab-count" id="count-audio">0</span></button>
+  </div>
+  <div class="search-wrap">
+    <input type="text" placeholder="ابحث عن أداة..." id="searchInput" oninput="searchTools()">
+    <span class="search-icon">🔍</span>
+  </div>
+</div>
+<div class="main-content">
+  <div class="category-section cat-writing" id="sec-writing">
+    <div class="category-header"><div class="category-icon">✍️</div><div><div class="category-title">كتابة المحتوى والدردشات</div><div class="cat-sub">أدوات لكتابة المحتوى والتحدث مع الذكاء الاصطناعي</div></div><div class="category-count" id="badge-writing"></div></div>
+    <div class="divider"></div><div class="tools-grid" id="grid-writing"></div>
+  </div>
+  <div class="category-section cat-images" id="sec-images">
+    <div class="category-header"><div class="category-icon">🎨</div><div><div class="category-title">توليد الصور</div><div class="cat-sub">أدوات لإنشاء وتحرير الصور بالذكاء الاصطناعي</div></div><div class="category-count" id="badge-images"></div></div>
+    <div class="divider"></div><div class="tools-grid" id="grid-images"></div>
+  </div>
+  <div class="category-section cat-video" id="sec-video">
+    <div class="category-header"><div class="category-icon">🎬</div><div><div class="category-title">إنشاء الفيديو</div><div class="cat-sub">أدوات لإنشاء وتحرير الفيديوهات بالذكاء الاصطناعي</div></div><div class="category-count" id="badge-video"></div></div>
+    <div class="divider"></div><div class="tools-grid" id="grid-video"></div>
+  </div>
+  <div class="category-section cat-presentation" id="sec-presentation">
+    <div class="category-header"><div class="category-icon">📊</div><div><div class="category-title">ملفات العروض التقديمية</div><div class="cat-sub">أدوات لإنشاء عروض باوربوينت احترافية</div></div><div class="category-count" id="badge-presentation"></div></div>
+    <div class="divider"></div><div class="tools-grid" id="grid-presentation"></div>
+  </div>
+  <div class="category-section cat-audio" id="sec-audio">
+    <div class="category-header"><div class="category-icon">🎵</div><div><div class="category-title">توليد الصوت والموسيقى</div><div class="cat-sub">أدوات لإنشاء الأصوات والموسيقى والتعليق الصوتي</div></div><div class="category-count" id="badge-audio"></div></div>
+    <div class="divider"></div><div class="tools-grid" id="grid-audio"></div>
+  </div>
+  <div class="no-results" id="noResults"><div style="font-size:3rem;margin-bottom:14px">🔍</div><p>لا توجد نتائج مطابقة للبحث</p></div>
+</div>
+<footer>
+  <div class="footer-logos">
+    <div class="footer-logo-item"><img src="data:image/webp;base64,UklGRjwCAABXRUJQVlA4IDACAADwDACdASpQAFAAPu1mrVIppSknqPbbGTAdiWIAyySqSzXj7aPntdMl3oL/VMFZaDLT0qbP5ta7tVs50e+COxnHXZUkzCevoLfdcdWEJy5ta52U0RSb+BeowGgBbtnwhv1ZXORIfxJO9WgcR0dZNFrAAP7xYL9sWyy7TuqlTtL5QLbbzWaZKVrPeEZ600vEJTU7kEUhURTcrybfVXYIKgDy7gadTO7DZ2v/tuIAA7lhFp2B9Q8aYd9rBOW3iIBis1c11/gipSsoPBNot2m4geMfHYXpNpPZiMNUtsidr2M0QZX53MO32AlPWGVth1vfCTZsGq2yg/ryN7DIRCqT9+wkK+D+Rxx789R3fvU1lPssKpzdU0ReOuwRVJefJ43itQn0PLz9qjJGiYfaS5hBFjHdzIKI2BWY5wR1McsU3F7Ud7Ru5SEFa018AwzCS7e1p8RalRlcY/SiR0eVcyokLf+f6YlUIqg0Lg+zHQBhdH+mdEtRGPZEPzPIGM06d0o5TKjd9sOu94SdFPUJK/vvlBcbTjejQCAHpbwlO42W6ZfeWg9auwtslapOOf1XICgKHadD8GpEOHU39FbARlx8ppILZgi12N/kyY0d4A06/9XpShlCsvH+tbHj6KL/iqNURPKb+nOivIcawfSmHXiEEzZyDEl30fQIlCG/qkZGadVSwnNZuRVVfmgeYR9BPybAH0/BHLUeTZbjpf+TqXVxFNmCiHg4oFkuJGt3BGvt9FBgAA==" alt="إبداع رقمي"><span>مبادرة إبداع رقمي</span></div>
+    <div class="footer-logo-item"><img src="data:image/webp;base64,UklGRsQFAABXRUJQVlA4ILgFAADQGQCdASpQAFAAPu1gp02ppaOiMzZrMTAdiWgAyl2pPT7SXot24nPM+jD/i78VvPn+or+nG/0QhY8vmSY52cBWXGo0qdmh+Pf6739/7mex61u1z6n7ud//3BG/n2Bgh68CcubapTYuSBMQ6zRwLSm51qIC9o6+tPWuU6xE6vw6eYTt4PnTheoGMnUxaP2othxG2DbtlDW6UQVJErfu5YTIutn9mZlXkYYzJRwpkVYim+1lVVfAu0jDmW3Nx7jL499ybvShxjrJ6l/Aoz4jkitm0K9fuN5/AAD+/obwfgE6ghg6M/P/pe+0KZOl626bOrpCrF2f5pQ4V0rMoPKU66mFxeF5B9QV9h1A3GpjkrNp1Ej9YwdwebSc9VdhANrXoElzXcQmWR80VVFHMjz3mmq/gFiE+C9WQ+0hJ0PqIhTYkl8m8+lPJjkqKjw6ZAMHD/nMsELUFTxhqyOGLYe1QOwsYkN+Wk9sbHZx/uY5LtQSg6Wv8BECKwdyampGuhR1T4elltFpm6gbBe19OV7mdPLe1kZ5ESe+z79fPU8FOdCCQpEOFbTNpC32QV/yzRxpItC9eLjcKTBxWS9TlvnbusK4JJY3Dkt6aR8Tbr6s0QK02bHxUMfmC3XXTC7m+2HiNjd4PQCLlKRxodV0yl29AbhozxNhld3R+MNo4WO335iQTyY+K7GPePyiFEouZhpBGt8SG6FK56TFiOqoGH5Xc6vAs4KKRmlc7CouIffXEiNW8yxbfsXJzuyqRQS8uZt17VYJGtwc2BGuXTbMVINbeTyf9I852f0jP8DzIk5lJ8UdCZVE+ySjpkucQov2ZY2RJXiztDqS9MHQUi70Zduzm9kFSgEnGcCWaTimK0OOSjcDRnzxFs+AxfuIwZpQw5AAxu1P3/ZGzDFidGTpKffIHlcj2RZxqt+dxKLk/xWyWlAVZZ0wHDdLjW9r1ds/2IT+b7hhjHSVdU+7AhR9URbCZejyPEPG3MT2UsDZoc+pZNxKAnFxlF5sDqSQRUwHtxlkqBR6k+SRQ0YNhfzcQMICfHd73xsStwWbbbFFDT8+CyfAxr7Etks+Ht7N8VglmzFJaoEWx/GSDv5PJ2STP+YtI5UGDdhgqmYkfjehd4IeKlOOHKIJqKjQv7MwjcV7KYC9VecBVb2SUT9KwLKTFP5GmsB8u55OAYJHsdavZpwB8XjXwv+8HBejw7kPvLpPzH0TQTXUvxVhcsk0o4VGvcRUqjVWHmw/rucqnuhoJAm/0Poj5lDO7aIHsCBusNIG3gV7cBTADOiWDQRvNvpTb/I+wIHP29HogU9d2IYF+sFCl4BrBmZlTDpGymOTn+p5zYipvu9zu3GTo9oI40epYjEgUvu00jt6gJsX/AWKIGF1yT+aJdW6qs99Q/gBp0sPFri+tj6/ZT15cEDrEzFaXBi870XCdJRbJduQ3Vq3A25TcKwsuOsFoSdBdGUCoONFf8m1rhDiCrJLsCeQThXOVnlm60Zx3KbZTFZ649DuCKq7G5EtiH6RDNzuwtrBUTl4IVoMAvDnIl//3955PoXzJYgeA7oqn90NloM7ulZGGizQG5fKHXrJTratWpTChTF5UaM0nUPAWGH8KgR7Dj4lHLFvyRCamVwEPuE3UIubVXAjiqYHANRa+sZsCWelk28ROngp2T57AkzS07hMq4duGoUljykJccrOzHXC6NY1VS0jHKmMGtWSmmWqXhn4pS1QChBAXy+UmOaG/J8Y5xEinm6aBixgoW9bMmM1BWQED1IeQCacLj1ChPQQD1+RqhIEQkrIJ1DnFeUxBEMITqjvNYkQ6lR0GjLst7+uk0DSLNx8/Di5BepeVK2koUE3TZmbH036MtCjXiicL4aET1F/JN5NAudD5EhC6e2dsPhKOQ75OiNmlo1lh376VGW7ckxjtWjJ+gFEXi0mv5eKwpeGesBCbD/YVKAXYxO8AAA=" alt="البرنامج القومي"><span>البرنامج القومي للصعيد والمحافظات الحدودية</span></div>
+    <div class="footer-logo-item"><img src="data:image/webp;base64,UklGRmYDAABXRUJQVlA4IFoDAAAQEACdASpQAFAAPu1ysFMppqQipnzIaTAdiWUAU9939TrCBMw6suDfVUA0fyOVA8dTfiz/Q7xqxWZTDn0ipkkziqK/9XfIxPgmcXYrfEPlGn9Eof0Eop8AKHpaA/cbc6DSVgUu897HKaTVpTAXqgOoPRNeragErnLCiM2GmmpTEGCp7qYpV2QfAAD++2tllNvSx2+WwoI5Qah7Os62Ergne3yatm6IDYHnp2Kf1FWXjkd2Ec/msR1g13UfTya3qkJTzz4v65b2JDt8HFE4e5sHLvGRksp2lCQ6DVv52xvhmqmAdAIp6rSVpDRcgeHZ/f5rF7lmvTujU29BA74oTdFZM6A4ppjVqIuddTsLi4nG6VHAmMIlAx0w1G+RoSHoub/XJpfRjUeK8OGOQLwpJNKisIibn7FEcZBZuO1rifuh2gTzyH1G3eyYWDfnoiJGCBnWD2hOMSBQ18yK1UpPSGZQRbxY1c6mtqvn6pvYW3OrTsbkNY3gVIcIw3CR8OcWRAF9gBQZqUAaFpKV52RigvgV4p55FE7fyuoGGHeF6rMDteYqUllbHotkU+dex/u4/ljMYuoSmCDGNMo0D/4HrtJk4P0qB807srP1viG8D/HA2FiDKrt8dZK1Yi2FCvAkYDVAC/H3CowF/tBGbzDPgoMwF44403jqlpHqd5sRCiqWhTCOjYw/vw7/gz2tGv09zXFt4TjGSYFi0GlMa8Ed/TltI/NlrXcpiDBiUPXlyku0U5KuKC8vlv+xdE+YcLzipcsV2csBwiPQ8kTEtlOPo7g0cYRYB6CZpF3cWzfxgfpfP2ZC46fQRTHQ4plDqP9zk4mZ1Ax+yh7Go5KzmHMDDUyel1z0HZ6dkB4usksEeKc9LfjUF9FVtDtsycmzy6SA4W2uk1E6qenZByVE/hU1w4u0Mmk5NHclqZiFni+J/S5ALYWlUq9/TocOhzLpUX21M+h7TVazymg/3ZhF2Z5cjUqyS3chgiTs/tfr1pHlowX9TfKlzPhUJePvKtajpNxXJiNMb98gfSaQtVfaxfs5SiboRD+lnm2TmH4/EsVboOr5WCgbdeSZ1jPw1vA7104+xuwufPoehlWjTRNLxKpom4dwfcl6tSixZHUcqhsrQyijzJPbXFH7HwAAAAA=" alt="وزارة الشباب"><span>وزارة الشباب والرياضة</span></div>
+    <div class="footer-logo-item"><img src="data:image/webp;base64,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" alt="رئاسة مجلس الوزراء"><span>رئاسة مجلس الوزراء</span></div>
+  </div>
+  <p>© 2025 مبادرة إبداع رقمي | جميع الأدوات المذكورة هي خدمات طرف ثالث | تم تجميع هذا الدليل لتمكين الشباب المصري</p>
+</footer>
+<script>
+const tools = {
+  writing: [
+    { name:"ChatGPT", url:"https://chat.openai.com", emoji:"🤖", color:"#00A67E", tag:"دردشة", desc:"أشهر مساعد ذكاء اصطناعي في العالم" },
+    { name:"Claude", url:"https://claude.ai", emoji:"💜", color:"#7B2FFF", tag:"دردشة", desc:"مساعد متميز بالفهم العميق والدقة" },
+    { name:"Gemini", url:"https://gemini.google.com", emoji:"✨", color:"#4285F4", tag:"دردشة", desc:"ذكاء Google متعدد الوسائط والبحث" },
+    { name:"Copilot", url:"https://copilot.microsoft.com", emoji:"🪟", color:"#0078D4", tag:"مساعد", desc:"مساعد Microsoft المدمج مع Office" },
+    { name:"Rytr", url:"https://rytr.me", emoji:"📝", color:"#FF6B6B", tag:"كتابة", desc:"كتابة محتوى احترافي بنقرة واحدة" },
+    { name:"Copy.ai", url:"https://copy.ai", emoji:"📋", color:"#6C5CE7", tag:"كتابة", desc:"توليد نصوص تسويقية إبداعية" },
+    { name:"Writesonic", url:"https://writesonic.com", emoji:"⚡", color:"#FD7272", tag:"كتابة", desc:"محتوى SEO جاهز للنشر فوراً" },
+    { name:"Jasper AI", url:"https://jasper.ai", emoji:"🧠", color:"#FF8C42", tag:"كتابة", desc:"أداة الكتابة المفضلة للمسوّقين" },
+    { name:"QuillBot", url:"https://quillbot.com", emoji:"🪶", color:"#2ECC71", tag:"تحرير", desc:"إعادة صياغة النصوص باحترافية" },
+    { name:"Anyword", url:"https://anyword.com", emoji:"💬", color:"#E74C3C", tag:"كتابة", desc:"تحسين النصوص لزيادة التحويلات" },
+    { name:"Notion AI", url:"https://notion.so", emoji:"📓", color:"#374151", tag:"منظومة", desc:"تنظيم الأفكار والكتابة في مكان واحد" },
+    { name:"Sudowrite", url:"https://sudowrite.com", emoji:"✏️", color:"#8B5CF6", tag:"إبداعي", desc:"رفيقك الإبداعي لكتابة القصص" },
+    { name:"Perplexity AI", url:"https://perplexity.ai", emoji:"🔎", color:"#20B2AA", tag:"بحث", desc:"بحث ذكي مع مصادر موثوقة فورية" },
+    { name:"TheK AI", url:"https://thek.ai", emoji:"🔥", color:"#FF4500", tag:"دردشة", desc:"دردشة ذكية متعددة الاستخدامات" },
+    { name:"DuckDuckGo AI Chat", url:"https://duckduckgo.com/aichat", emoji:"🦆", color:"#DE5833", tag:"خصوصية", desc:"ذكاء اصطناعي مع حماية كاملة للخصوصية" },
+    { name:"Mistral Le Chat", url:"https://chat.mistral.ai", emoji:"🌪️", color:"#FF7000", tag:"دردشة", desc:"نموذج أوروبي سريع ومفتوح المصدر" },
+    { name:"Poe", url:"https://poe.com", emoji:"🎯", color:"#6366F1", tag:"متعدد", desc:"منصة تجمع أفضل نماذج الذكاء الاصطناعي" },
+    { name:"HuggingChat", url:"https://huggingface.co/chat", emoji:"🤗", color:"#FFD21E", tag:"مفتوح", desc:"نماذج مفتوحة المصدر بلا قيود" },
+    { name:"Pi", url:"https://pi.ai", emoji:"🥧", color:"#EC4899", tag:"شخصي", desc:"مساعد شخصي دافئ وودود للمحادثة" },
+    { name:"GravityWrite", url:"https://gravitywrite.com", emoji:"🌌", color:"#6D28D9", tag:"كتابة", desc:"محتوى تسويقي بأكثر من 250 قالب" },
+  ],
+  images: [
+    { name:"Ideogram", url:"https://ideogram.ai", emoji:"🎭", color:"#7C3AED", tag:"صور", desc:"الأفضل في دمج النصوص داخل الصور" },
+    { name:"Gemini", url:"https://gemini.google.com", emoji:"✨", color:"#4285F4", tag:"صور", desc:"صور واقعية بتقنية Google المتقدمة" },
+    { name:"ChatGPT", url:"https://chat.openai.com", emoji:"🤖", color:"#00A67E", tag:"صور", desc:"توليد صور DALL·E عالية الجودة" },
+    { name:"Bing Create", url:"https://www.bing.com/images/create", emoji:"🖼️", color:"#0078D4", tag:"صور", desc:"صور مجانية غير محدودة من Microsoft" },
+    { name:"Copilot", url:"https://copilot.microsoft.com", emoji:"🪟", color:"#0078D4", tag:"صور", desc:"صور ذكية مدمجة مع مساعد Copilot" },
+    { name:"Canva", url:"https://canva.com", emoji:"🎨", color:"#00C4CC", tag:"تصميم", desc:"تصميم وتوليد صور في بيئة واحدة" },
+    { name:"Manus", url:"https://manus.im", emoji:"🤲", color:"#FF6B35", tag:"صور", desc:"وكيل ذكاء اصطناعي متكامل للمهام" },
+    { name:"Grok", url:"https://grok.com/", emoji:"⚡", color:"#1DA1F2", tag:"صور", desc:"صور من xAI بقدرات إبداعية حرة" },
+    { name:"Leonardo.ai", url:"https://leonardo.ai", emoji:"🦁", color:"#FF4500", tag:"صور", desc:"صور احترافية للألعاب والفنون" },
+    { name:"Midjourney", url:"https://midjourney.com", emoji:"🌌", color:"#6C5CE7", tag:"احترافي", desc:"أجمل صور فنية على الإطلاق" },
+    { name:"Firefly", url:"https://firefly.adobe.com", emoji:"🦋", color:"#FF0000", tag:"Adobe", desc:"صور Adobe آمنة تجارياً بالكامل" },
+    { name:"Stable Diffusion", url:"https://stablediffusionweb.com", emoji:"🌀", color:"#9B59B6", tag:"مفتوح", desc:"نموذج مفتوح المصدر بلا حدود" },
+    { name:"Playground AI", url:"https://playgroundai.com", emoji:"🛝", color:"#27AE60", tag:"صور", desc:"تجريب أنماط فنية متنوعة مجاناً" },
+    { name:"NightCafe", url:"https://creator.nightcafe.studio", emoji:"🌃", color:"#2C3E50", tag:"فن", desc:"فن رقمي إبداعي بأساليب متعددة" },
+    { name:"SeaArt AI", url:"https://seaart.ai", emoji:"🌊", color:"#0EA5E9", tag:"صور", desc:"صور أنمي واقعية بجودة عالية" },
+    { name:"Tensor.art", url:"https://tensor.art", emoji:"🔺", color:"#EF4444", tag:"صور", desc:"نماذج مخصصة لكل أسلوب فني" },
+    { name:"Craiyon", url:"https://craiyon.com", emoji:"🖍️", color:"#F59E0B", tag:"مجاني", desc:"توليد صور مجاني وسريع للجميع" },
+    { name:"Recraft.ai", url:"https://recraft.ai", emoji:"🎪", color:"#8B5CF6", tag:"تصميم", desc:"جرافيك ومتجهات بالذكاء الاصطناعي" },
+    { name:"Krea AI", url:"https://krea.ai", emoji:"💎", color:"#06B6D4", tag:"صور", desc:"تحسين الصور ومزج الأساليب الفنية" },
+    { name:"Dezgo", url:"https://dezgo.com", emoji:"🎭", color:"#10B981", tag:"صور", desc:"صور Stable Diffusion مجانية بلا تسجيل" },
+  ],
+  video: [
+    { name:"Flow", url:"https://labs.google/fx/tools/flow", emoji:"🌊", color:"#0EA5E9", tag:"فيديو", desc:"فيديو سينمائي مذهل من Google Labs" },
+    { name:"Grok", url:"https://grok.com/", emoji:"⚡", color:"#1DA1F2", tag:"فيديو", desc:"فيديو ذكي مدعوم من xAI بقدرات خارقة" },
+    { name:"GeminiGenAI", url:"https://geminigen.ai/", emoji:"✨", color:"#4285F4", tag:"فيديو", desc:"إنشاء فيديو بتقنية Gemini المتقدمة" },
+    { name:"Lumen5", url:"https://lumen5.com", emoji:"💡", color:"#FF6B35", tag:"فيديو", desc:"تحويل المقالات لفيديو تلقائياً" },
+    { name:"Hypernatural", url:"https://hypernatural.ai", emoji:"🔮", color:"#8B5CF6", tag:"فيديو", desc:"فيديوهات سريعة من النصوص بذكاء" },
+    { name:"InVideo", url:"https://invideo.io", emoji:"🎬", color:"#7C3AED", tag:"فيديو", desc:"محرر فيديو ذكي بأكثر من 5000 قالب" },
+    { name:"HeyGen", url:"https://heygen.com", emoji:"👤", color:"#EC4899", tag:"أفاتار", desc:"أفاتار بشري ناطق بأي لغة تختارها" },
+    { name:"Pollo AI", url:"https://pollo.ai", emoji:"🐔", color:"#F59E0B", tag:"فيديو", desc:"توليد فيديو إبداعي من صور ونصوص" },
+    { name:"PixVerse AI", url:"https://pixverse.ai", emoji:"🎞️", color:"#10B981", tag:"فيديو", desc:"تحريك الصور وتوليد مقاطع سينمائية" },
+    { name:"Kling", url:"https://klingai.com", emoji:"🎥", color:"#6366F1", tag:"فيديو", desc:"فيديوهات واقعية بحركة سلسة ومبهرة" },
+    { name:"RunwayML", url:"https://runwayml.com", emoji:"🛤️", color:"#111111", tag:"احترافي", desc:"أقوى أداة لتوليد وتحرير الفيديو" },
+    { name:"Pika Labs", url:"https://pika.art", emoji:"⚡", color:"#FF2D7B", tag:"فيديو", desc:"تحريك الصور وإنشاء مقاطع إبداعية" },
+    { name:"CapCut", url:"https://capcut.com", emoji:"✂️", color:"#1C1C2E", tag:"تحرير", desc:"تحرير فيديو احترافي بمؤثرات ذكية" },
+    { name:"Descript", url:"https://descript.com", emoji:"📼", color:"#0D9488", tag:"تحرير", desc:"تحرير الفيديو بتعديل النص فقط" },
+    { name:"Luma Dream Machine", url:"https://lumalabs.ai/dream-machine", emoji:"🌙", color:"#6D28D9", tag:"فيديو", desc:"فيديو واقعي مذهل من وصف نصي" },
+    { name:"Synthesia", url:"https://synthesia.io", emoji:"🤖", color:"#00C4CC", tag:"أفاتار", desc:"فيديوهات تدريبية بمقدم أفاتار ذكي" },
+    { name:"Hailuo AI", url:"https://hailuoai.com", emoji:"🌊", color:"#3B82F6", tag:"فيديو", desc:"مقاطع فيديو احترافية بجودة سينمائية" },
+    { name:"FlexClip AI", url:"https://flexclip.com", emoji:"🎞️", color:"#EF4444", tag:"تحرير", desc:"صناعة فيديو سهلة للمبتدئين" },
+    { name:"Opus Clip", url:"https://opus.pro", emoji:"🎯", color:"#7C3AED", tag:"قص", desc:"قص الفيديو الطويل لمقاطع قصيرة ذكياً" },
+    { name:"Fliki", url:"https://fliki.ai", emoji:"🦜", color:"#FF6B35", tag:"فيديو", desc:"تحويل النص لفيديو بصوت طبيعي" },
+  ],
+  presentation: [
+    { name:"Gamma", url:"https://gamma.app", emoji:"γ", color:"#7C3AED", tag:"عروض", desc:"عروض تفاعلية احترافية بالذكاء الاصطناعي" },
+    { name:"NotebookLM", url:"https://notebooklm.google.com", emoji:"📔", color:"#4285F4", tag:"تحليل", desc:"تحليل المستندات وتلخيصها بذكاء" },
+    { name:"Canva", url:"https://canva.com/presentations", emoji:"🎨", color:"#00C4CC", tag:"تصميم", desc:"تصميم عروض بصرية مذهلة بسهولة" },
+    { name:"Pi Presentation", url:"https://pi.ai", emoji:"📊", color:"#EC4899", tag:"عروض", desc:"عروض ذكية تتكيف مع المحتوى" },
+    { name:"Prezi AI", url:"https://prezi.com", emoji:"🌐", color:"#3FA8D5", tag:"تفاعلي", desc:"عروض غير خطية وتفاعلية وجذابة" },
+    { name:"PresentationGO", url:"https://presentationgo.com", emoji:"🚀", color:"#FF6B35", tag:"قوالب", desc:"قوالب مجانية احترافية جاهزة للتنزيل" },
+    { name:"Beautiful.ai", url:"https://beautiful.ai", emoji:"💎", color:"#6366F1", tag:"ذكي", desc:"تصميم ذكي يرتّب المحتوى تلقائياً" },
+    { name:"SlidesGo", url:"https://slidesgo.com", emoji:"🎯", color:"#EF4444", tag:"قوالب", desc:"مئات القوالب المجانية لكل موضوع" },
+    { name:"Popai", url:"https://popai.pro", emoji:"🤖", color:"#8B5CF6", tag:"ذكي", desc:"عروض من PDF أو نص في ثوانٍ" },
+    { name:"Tome", url:"https://tome.app", emoji:"📖", color:"#1C1C2E", tag:"سرد", desc:"سرد قصصي بصري مذهل بالذكاء الاصطناعي" },
+    { name:"SlidesCarnival", url:"https://slidescarnival.com", emoji:"🎪", color:"#FF4500", tag:"قوالب", desc:"قوالب Google Slides مجانية وأنيقة" },
+    { name:"Decktopus", url:"https://decktopus.com", emoji:"🐙", color:"#10B981", tag:"ذكي", desc:"عروض ذكية تتضمن أسئلة تفاعلية" },
+    { name:"MagicSlides", url:"https://magicslides.app", emoji:"✨", color:"#7C3AED", tag:"سريع", desc:"تحويل أي نص لعرض تقديمي فوراً" },
+    { name:"Prezent AI", url:"https://prezent.ai", emoji:"🎁", color:"#06B6D4", tag:"احترافي", desc:"عروض مؤسسية بمعايير Fortune 500" },
+    { name:"MagicSlides", url:"https://magicslides.app", emoji:"✨", color:"#7C3AED", tag:"سريع", desc:"إنشاء شرائح متكاملة من موضوع واحد" },
+    { name:"Decktopus", url:"https://decktopus.com", emoji:"🐙", color:"#10B981", tag:"ذكي", desc:"قوالب ذكية لعروض المبيعات والتدريب" },
+    { name:"Sendsteps AI", url:"https://sendsteps.com", emoji:"📡", color:"#3B82F6", tag:"تفاعلي", desc:"عروض تفاعلية مع تصويت الجمهور" },
+    { name:"Wonderslide", url:"https://wonderslide.com", emoji:"🌟", color:"#EC4899", tag:"ذكي", desc:"تصميم شرائح جميلة بضغطة واحدة" },
+    { name:"Wepik", url:"https://wepik.com", emoji:"🖌️", color:"#FF6B6B", tag:"تصميم", desc:"قوالب تصميم غنية قابلة للتخصيص" },
+    { name:"Visme AI", url:"https://visme.co", emoji:"📐", color:"#4A90D9", tag:"مرئيات", desc:"إنفوجرافيك وعروض بصرية متكاملة" },
+  ],
+  audio: [
+    { name:"Suno AI", url:"https://suno.com", emoji:"🎵", color:"#6D28D9", tag:"موسيقى", desc:"توليد أغاني كاملة بكلمات وألحان" },
+    { name:"Udio AI", url:"https://udio.com", emoji:"🎶", color:"#DB2777", tag:"موسيقى", desc:"موسيقى احترافية من وصف نصي" },
+    { name:"ElevenLabs", url:"https://elevenlabs.io", emoji:"🎙️", color:"#0F172A", tag:"صوت", desc:"أصوات بشرية خارقة الواقعية" },
+    { name:"Murf AI", url:"https://murf.ai", emoji:"🎤", color:"#7C3AED", tag:"تعليق", desc:"تعليق صوتي احترافي بـ120 صوت" },
+    { name:"TTSMaker", url:"https://ttsmaker.com", emoji:"🔊", color:"#059669", tag:"نص-صوت", desc:"تحويل النص لصوت مجاناً وبسرعة" },
+    { name:"Adobe Podcast AI", url:"https://podcast.adobe.com", emoji:"🎧", color:"#FF0000", tag:"بودكاست", desc:"تنقية الصوت وتحريره بالذكاء الاصطناعي" },
+    { name:"Loudly", url:"https://loudly.com", emoji:"📢", color:"#F59E0B", tag:"موسيقى", desc:"مقاطع موسيقية مخصصة لكل مشروع" },
+    { name:"Voicemaker", url:"https://voicemaker.in", emoji:"🗣️", color:"#3B82F6", tag:"صوت", desc:"أصوات طبيعية لأكثر من 30 لغة" },
+    { name:"Natural Readers", url:"https://naturalreaders.com", emoji:"📖", color:"#10B981", tag:"قراءة", desc:"قراءة النصوص بصوت واضح وطبيعي" },
+    { name:"Soundraw", url:"https://soundraw.io", emoji:"🎼", color:"#EF4444", tag:"موسيقى", desc:"ألحان أصلية بدون حقوق ملكية" },
+    { name:"Lovo.ai", url:"https://lovo.ai", emoji:"💿", color:"#8B5CF6", tag:"صوت", desc:"أصوات وشخصيات صوتية للمحتوى" },
+    { name:"Suno Bark", url:"https://github.com/suno-ai/bark", emoji:"🌳", color:"#6B7280", tag:"مفتوح", desc:"توليد صوت مفتوح المصدر بدون قيود" },
+    { name:"MusicFX", url:"https://aitestkitchen.withgoogle.com/tools/music-fx", emoji:"🎛️", color:"#4285F4", tag:"موسيقى", desc:"تأثيرات موسيقية من Google بوصف قصير" },
+    { name:"Gemini", url:"https://gemini.google.com", emoji:"✨", color:"#4285F4", tag:"صوت", desc:"توليد صوت وموسيقى بتقنية Google" },
+    { name:"Mubert", url:"https://mubert.com", emoji:"🎹", color:"#0D9488", tag:"موسيقى", desc:"موسيقى تكيّفية مستمرة لكل مزاج" },
+    { name:"Play.ht", url:"https://play.ht", emoji:"▶️", color:"#7C3AED", tag:"تعليق", desc:"تحويل المقالات لبودكاست في ثوانٍ" },
+    { name:"Beatoven.ai", url:"https://beatoven.ai", emoji:"🥁", color:"#DC2626", tag:"موسيقى", desc:"ألحان مخصصة لمقاطع الفيديو" },
+    { name:"Aiva", url:"https://aiva.ai", emoji:"🎻", color:"#1E40AF", tag:"كلاسيكي", desc:"تأليف موسيقى كلاسيكية وأوركسترالية" },
+    { name:"Kits AI", url:"https://kits.ai", emoji:"🎸", color:"#D97706", tag:"صوت", desc:"استنساخ الأصوات وتحويل الغناء" },
+    { name:"Boomy", url:"https://boomy.com", emoji:"💫", color:"#7C3AED", tag:"موسيقى", desc:"أغانٍ أصلية جاهزة للتوزيع فوراً" },
+  ]
+};
+function getLogoStyle(c) { return `background:linear-gradient(135deg,${c}CC,${c}88);box-shadow:0 4px 15px ${c}44;`; }
+function buildCard(tool,cat) {
+  const a=document.createElement('a');
+  a.className='tool-card'; a.href=tool.url; a.target='_blank'; a.rel='noopener noreferrer';
+  a.dataset.cat=cat; a.dataset.name=tool.name.toLowerCase();
+  a.style.animationDelay=(Math.random()*.3)+'s';
+  a.innerHTML=`<div class="tool-logo" style="${getLogoStyle(tool.color)}">${tool.emoji}</div><div class="tool-name">${tool.name}</div><div class="tool-tag">${tool.tag}</div><div class="tool-desc">${tool.desc}</div><div class="tool-arrow">↗ زيارة الأداة</div>`;
+  return a;
+}
+let total=0;
+Object.entries(tools).forEach(([cat,list])=>{
+  const grid=document.getElementById('grid-'+cat);
+  list.forEach(t=>{grid.appendChild(buildCard(t,cat));total++;});
+  const b=document.getElementById('badge-'+cat), c=document.getElementById('count-'+cat);
+  if(b) b.textContent=list.length+' أداة';
+  if(c) c.textContent=list.length;
+});
+document.getElementById('count-all').textContent=total;
+let n=0;
+const tm=setInterval(()=>{n=Math.min(n+total/90,total);document.getElementById('totalTools').textContent=Math.round(n);if(n>=total)clearInterval(tm);},16);
+function filterTools(cat,btn){
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active')); btn.classList.add('active');
+  ['writing','images','video','presentation','audio'].forEach(s=>{document.getElementById('sec-'+s).style.display=(cat==='all'||cat===s)?'':'none';});
+  document.getElementById('searchInput').value='';
+  document.querySelectorAll('.tool-card').forEach(c=>c.classList.remove('hidden'));
+  document.getElementById('noResults').style.display='none';
+}
+function searchTools(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  ['writing','images','video','presentation','audio'].forEach(s=>{document.getElementById('sec-'+s).style.display='';});
+  let vis=0;
+  document.querySelectorAll('.tool-card').forEach(c=>{if(!q||c.dataset.name.includes(q)){c.classList.remove('hidden');vis++;}else c.classList.add('hidden');});
+  document.getElementById('noResults').style.display=vis===0?'block':'none';
+}
+const sc=document.getElementById('stars');
+for(let i=0;i<80;i++){
+  const s=document.createElement('div'); s.className='star';
+  const sz=Math.random()*2+.5;
+  s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s;`;
+  sc.appendChild(s);
+}
+</script>
+</body>
+</html>
